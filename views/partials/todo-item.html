@@ -1,0 +1,11 @@
+<li style="display: flex" id="todo-{{id}}">
+  {{text}}
+  <button
+    type="button"
+    hx-delete="/delete-todo/{{id}}"
+    hx-swap="delete"
+    hx-target="#todo-{{id}}"
+  >
+    x
+  </button>
+</li>
