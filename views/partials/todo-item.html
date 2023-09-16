@@ -1,11 +1,39 @@
-<li style="display: flex" id="todo-{{id}}">
-  {{text}}
-  <button
-    type="button"
-    hx-delete="/delete-todo/{{id}}"
-    hx-swap="delete"
-    hx-target="#todo-{{id}}"
-  >
+<li
+  style="display: flex; gap: 4px"
+  id="todo-{{id}}"
+  x-data="{ update: false, text: '{{text}}', done: {{done}} }"
+>
+  <span
+    x-cloak
+    x-show="!update"
+    :style="done && 'text-decoration: line-through'"
+    @click="!done && (update=true)"
+    x-text="text"
+  ></span>
+  <input
+    x-cloak
+    x-show="update && !done"
+    x-model="text"
+    x-effect="update && setTimeout(() => $el.focus(), 20)"
+    @blur="update=false"
+    @focus="$el.setSelectionRange($el.value.length, $el.value.length)"
+    hx-put="/update-todo/{{id}}"
+    hx-trigger="keyup changed delay:300ms"
+    hx-swap="none"
+    name="text"
+  />
+  <input
+    type="checkbox"
+    @change="done=$el.checked"
+    hx-put="/update-todo/{{id}}"
+    hx-trigger="change"
+    hx-swap="none"
+    name="done"
+    x-model="done"
+    :value="done.toString()"
+    id="checkbox-{{id}}"
+  />
+  <button type="button" hx-delete="/delete-todo/{{id}}" hx-swap="delete">
     x
   </button>
 </li>

@@ -1,10 +1,16 @@
 <h1>Todos</h1>
 
 <ul id="todos">
-  {{#each todos}} {{> todo-item text=this.text id=this.id}} {{/each}}
+  {{#each todos}} {{> todo-item text=this.text id=this.id done=this.done}}
+  {{/each}}
 </ul>
 
-<form hx-post="/add-todo" hx-target="#todos" hx-swap="beforeend">
+<form
+  hx-post="/add-todo"
+  hx-target="#todos"
+  hx-swap="beforeend"
+  hx-on::after-request="this.reset()"
+>
   <input type="text" name="text" />
   <button type="submit">add todo</button>
 </form>
