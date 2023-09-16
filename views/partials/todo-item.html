@@ -33,7 +33,12 @@
     :value="done.toString()"
     id="checkbox-{{id}}"
   />
-  <button type="button" hx-delete="/delete-todo/{{id}}" hx-swap="delete">
+  <button
+    type="button"
+    hx-delete="/delete-todo/{{id}}"
+    hx-swap="delete"
+    hx-target="#todo-{{id}}"
+  >
     x
   </button>
 </li>
